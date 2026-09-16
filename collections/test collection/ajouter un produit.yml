@@ -1,0 +1,68 @@
+info:
+  name: ajouter un produit
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: https://api.efi-academy.com/user-api/public/products
+  body:
+    type: json
+    data: |
+      {
+        "name": "{{$randomProductName}}",
+        "description": "{{$randomProduct}}",
+        "price": {{price}},
+        "stock": {{stock}},
+        "image_url": "{{$randomUrl}}"
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const price = (Math.random() * (102 - 20.5 +1) + 20.5);
+        const stock = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+
+        bru.setVar("price", price);
+        bru.setVar("stock", stock);
+    - type: after-response
+      code: |-
+        test("verifier l ajout produit", () => {
+          
+          let response = res.getBody();
+          let reqbody = req.getBody(); 
+          let status = res.getStatus();
+          
+          switch (status) {
+
+            case 201:
+              
+              expect(response.product.name).to.equal(reqbody.name);
+              expect(response.product.description).to.equal(reqbody.description);
+              expect(response.product.price).to.equal(reqbody.price);
+              expect(response.product.stock).to.equal(reqbody.stock);
+              
+              break;
+
+            case 403:
+              
+              expect(response.message).to.equal("Accès réservé aux administrateurs.");  
+              break;
+          }
+        });
+
+        test("liste de code",()=>{
+          let codes = [201, 403];
+          expect(codes).to.include(res.getStatus()); 
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

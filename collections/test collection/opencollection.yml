@@ -1,0 +1,34 @@
+opencollection: 1.0.0
+
+info:
+  name: test collection
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  variables:
+    - name: id
+      value:
+        type: number
+        data: "2035"
+    - name: email
+      value: Maxie78@gmail.com
+    - name: token
+      value: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1c2VyLWFwaSIsInN1YiI6MjAzMSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg5NTYzNTA0LCJleHAiOjE3ODk1NjcxMDQsImp0aSI6ImNiMGM4NzRhZmEzMTVmNGFlM2U3ODY5ODgyN2FhZWJmIn0.W0hT-pCOL_hkZiOg_XsOpJx0r_YB0PXwp9vojDAgPkI
+    - name: role
+      value: admin
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

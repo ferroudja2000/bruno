@@ -6,6 +6,8 @@ info:
 collections:
   - name: "test collection"
     path: "collections/test collection"
+  - name: "tp produits"
+    path: "collections/tp produits"
 
 specs:
 

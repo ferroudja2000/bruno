@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Register" file="Register.yml" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-09-16T14:08:30.424" hostname="ferroudja" time="0.485">
+    <testcase name="verifier le code 201 " status="pass" classname="Register" time="0.243"/>
+    <testcase name="verifier le code envoyé et le code reçu " status="pass" classname="Register" time="0.243"/>
+  </testsuite>
+  <testsuite name="login" file="login.yml" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-09-16T14:08:30.427" hostname="ferroudja" time="0.393">
+    <testcase name="verifier le code 200 " status="pass" classname="login" time="0.196"/>
+    <testcase name="verifier que le token existe" status="pass" classname="login" time="0.196"/>
+  </testsuite>
+  <testsuite name="ajouter un produit" file="ajouter un produit.yml" errors="0" failures="0" skipped="0" tests="2" timestamp="2026-09-16T14:08:30.428" hostname="ferroudja" time="0.307">
+    <testcase name="verifier l ajout produit" status="pass" classname="ajouter un produit" time="0.154"/>
+    <testcase name="check code 201" status="pass" classname="ajouter un produit" time="0.154"/>
+  </testsuite>
+</testsuites>

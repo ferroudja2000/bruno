@@ -1,0 +1,47 @@
+info:
+  name: Untitled
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://api.efi-academy.com/user-api/public/register
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Jean Dupont",
+        "email": "{{$randomEmail}}",
+        "password": "{{$randomPassword}}",
+        "role": "{{randomrole}}"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: 'bru.setVar("randomrole", Math.random() < 0.6 ? "admin" : "user");'
+    - type: after-response
+      code: |-
+        test("verifier le code 201",()=>{
+        expect(res.getStatus()).to.equal(201)
+        });
+
+        test("verifier le code envoyé",()=>{
+        let response  = res.getBody();
+        let reqbody = req.getBody();
+          
+          expect(reqbody.name).to.equal(response.user.name);
+          expect(reqbody.email).to.equal(response.user.email);
+          expect(reqbody.role).to.equal(response.user.role);
+          
+        bru.setCollectionVar("email", response.user.email)
+                                        
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

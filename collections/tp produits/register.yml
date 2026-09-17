@@ -1,11 +1,11 @@
 info:
-  name: Register
+  name: register
   type: http
   seq: 1
 
 http:
   method: POST
-  url: "{{url}}/public/register"
+  url: "{{URL}}/public/register"
   body:
     type: json
     data: |-
@@ -13,19 +13,17 @@ http:
         "name": "Jean Dupont",
         "email": "{{$randomEmail}}",
         "password": "secret123",
-        "role": "{{randomRole}}"
+        "role": "user"
       }
   auth: inherit
 
 runtime:
   scripts:
-    - type: before-request
-      code: 'bru.setVar("randomRole", Math.random() < 0.6 ? "admin" : "user");'
     - type: after-response
       code: |-
-        test ("verifier le code 201 ", ()=>{
-          let response = res.getStatus();
-          expect(response).to.equal(201); 
+        test("verifier le code 201",()=>{
+             let response = res.getStatus();
+             expect(response).to.equal(201)
         })
 
         test ("verifier le code envoyé et le code reçu ", ()=>{
@@ -35,13 +33,8 @@ runtime:
           expect(response.user.name).to.equal(requestBody.name);
           expect(response.user.email).to.equal(requestBody.email);
           expect(response.user.role).to.equal(requestBody.role);
-          
-          bru.setCollectionVar('id', response.user.id);
           bru.setCollectionVar('email', response.user.email);
-          //bru.setCollectionVar("password", response.user.password);
           bru.setCollectionVar("role", response.user.role);
-          
-          
         })
 
 settings:

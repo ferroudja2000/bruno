@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://api.efi-academy.com/user-api/public/products
+  url: "{{url}}/public/products"
   body:
     type: json
     data: |
@@ -24,7 +24,7 @@ runtime:
   scripts:
     - type: before-request
       code: |-
-        const price = (Math.random() * (102 - 20.5 +1) + 20.5);
+        const price = (Math.random() * (102 - 20.5 +1) + 20.5).toFixed(2);
         const stock = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
 
         bru.setVar("price", price);
@@ -52,10 +52,14 @@ runtime:
               
               expect(response.message).to.equal("Accès réservé aux administrateurs.");  
               break;
+              
+            default:
+              break;
           }
+          
         });
 
-        test("liste de code",()=>{
+        test("check code "  + res.getStatus() ,()=>{
           let codes = [201, 403];
           expect(codes).to.include(res.getStatus()); 
         });

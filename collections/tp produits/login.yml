@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{url}}/public/login"
+  url: "{{URL}}/public/login"
   body:
     type: json
     data: |-
@@ -18,9 +18,7 @@ http:
 runtime:
   scripts:
     - type: before-request
-      code: |-
-        let email = bru.getCollectionVar("email");
-        //bru.setVar("password",reqbody.password);
+      code: let email = bru.getCollectionVar("email");
     - type: after-response
       code: |-
         test ("verifier le code 200 ", ()=>{
@@ -34,7 +32,7 @@ runtime:
           
           let body = res.getBody();
           expect(body).to.have.property("token");
-          bru.setCollectionVar("token", body.token);
+          bru.setCollectionVar("tokenn", body.token);
          
           
         })
